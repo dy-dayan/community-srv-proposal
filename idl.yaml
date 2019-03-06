@@ -1,0 +1,3 @@
+depends:
+  - "dayan/community/srv-proposal/proposal.proto"
+  - "dayan/common/srv-atomicid/atomicid.proto"
