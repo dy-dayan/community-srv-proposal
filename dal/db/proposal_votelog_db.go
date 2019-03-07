@@ -13,12 +13,12 @@ const (
 )
 
 type ProposalVoteLog struct {
-	ID bson.ObjectId `bson:"_id"`
-	ProposalID int64 `bson:"proposal_id"`
-	Voter int64 `bson:"voter"`
-	Option string `bson:"option"`
-	CreatedAt int64 `bson:"created_at"`
-	UpdatedAt int64 `bson:"updated_at"`
+	ID         bson.ObjectId `bson:"_id"`
+	ProposalID int64         `bson:"proposal_id"`
+	Voter      int64         `bson:"voter"`
+	Option     string        `bson:"option"`
+	CreatedAt  int64         `bson:"created_at"`
+	UpdatedAt  int64         `bson:"updated_at"`
 }
 
 func UpsertProposalVoteLog(pid int64, voter int64, opt string) error {
@@ -31,13 +31,13 @@ func UpsertProposalVoteLog(pid int64, voter int64, opt string) error {
 	now := time.Now().Unix()
 
 	query := bson.M{
-		"proposal_id":pid,
-		"voter":voter,
+		"proposal_id": pid,
+		"voter":       voter,
 	}
 
 	data := bson.M{
 		"$set": bson.M{
-			"option": opt,
+			"option":     opt,
 			"updated_at": now,
 		},
 		"$setOnInsert": bson.M{
@@ -46,8 +46,8 @@ func UpsertProposalVoteLog(pid int64, voter int64, opt string) error {
 	}
 
 	change := mgo.Change{
-		Update:data,
-		Upsert:true,
+		Update:    data,
+		Upsert:    true,
 		Remove:    false,
 		ReturnNew: false,
 	}
@@ -71,16 +71,16 @@ func GetProposalVoteInfo(pid int64, opts []string) (result []byte, err error) {
 	group := bson.M{
 		"_id": "$option",
 		"count": bson.M{
-			"$sum":1,
+			"$sum": 1,
 		},
 	}
 
 	query := bson.M{
-		"proposal_id":pid,
-		"$group": group,
+		"proposal_id": pid,
+		"$group":      group,
 	}
 
-	ret := []struct{
+	ret := []struct {
 		ID    map[string]string `bson:"_id,omitempty"`
 		Count int
 	}{}
