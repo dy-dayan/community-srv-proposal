@@ -38,7 +38,8 @@ func Init() {
 }
 
 type Proposal struct {
-	ID        bson.ObjectId  `bson:"_id"`
+	ID        int64  `bson:"_id"`
+	CommunityID int64 `bson:"community_id"`
 	Title     string  `bson:"title"`
 	Content   string `bson:"content"`
 	Imgs      []string `bson:"imgs"`
@@ -56,15 +57,17 @@ var (
 )
 
 const (
-	ProposalState_Unknown = iota // 未知
+	ProposalState_Unknown int32 = iota // 未知
 	ProposalState_Ediion  // 编辑中
 	ProposalState_Commited // 已提交，投票中
 	ProposalState_End // 结束
 )
 
-func InsertProposal(title, content string, creator int64, imgs, opts []string) error {
+func InsertProposal(pid, cid int64, title, content string, creator int64, imgs, opts []string) error {
 	now := time.Now().Unix()
 	data := &Proposal{
+		ID: pid,
+		CommunityID: cid,
 		Title:     title,
 		Content:   content,
 		Imgs:      imgs,
@@ -87,9 +90,29 @@ func InsertProposal(title, content string, creator int64, imgs, opts []string) e
 
 
 
-func GetProposal(id string) error {
+func GetProposal(id int64) (*Proposal, error) {
 	query := bson.M{
-		"_id":bson.ObjectIdHex(id),
+		"_id":id,
+	}
+	ses := defaultMgo.Copy()
+	if ses == nil {
+		return nil, errors.New("mgo session is nil")
+	}
+	defer ses.Close()
+
+	ret := &Proposal{}
+	err := ses.DB(DBProposal).C(CProposal).Find(query).One(ret)
+	if err != nil {
+		return nil, err
+	}
+
+	return ret, err
+}
+
+
+func UpdateProposalTitleAndContent(id int64, title, content string) error {
+	query := bson.M{
+		"_id":id,
 	}
 	ses := defaultMgo.Copy()
 	if ses == nil {
@@ -97,5 +120,46 @@ func GetProposal(id string) error {
 	}
 	defer ses.Close()
 
-	return ses.DB(DBProposal).C(CProposal).Insert(data)
+	data := bson.M{}
+	if len(title) != 0 {
+		data["title"] = title
+	}
+	if len(content) != 0 {
+		data["content"] = content
+	}
+
+	change := mgo.Change{
+		Update: bson.M{
+			"$set": data,
+		},
+		Upsert:    false,
+		Remove:    false,
+		ReturnNew: false,
+	}
+
+	_, err := ses.DB(DBProposal).C(CProposal).Find(query).Apply(change, nil)
+	return err
+}
+
+func GetProposalList(cid int64, state, page int32) ([]*Proposal, error) {
+	ses := defaultMgo.Copy()
+	if ses == nil {
+		return nil, errors.New("mgo session is nil")
+	}
+	defer ses.Close()
+
+	limit := 30
+	skip := int(page)*(limit)
+
+	query := bson.M{
+		"community_id": cid,
+	}
+
+	ret := []*Proposal{}
+	err := ses.DB(DBProposal).C(CProposal).Find(query).Limit(limit).Skip(skip).All(&ret)
+	if err != nil {
+		return nil, err
+	}
+
+	return ret, nil
 }

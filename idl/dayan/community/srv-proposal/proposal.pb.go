@@ -27,6 +27,7 @@ type NewProposalReq struct {
 	Imgs                 []string `protobuf:"bytes,3,rep,name=Imgs,proto3" json:"Imgs,omitempty"`
 	Options              []string `protobuf:"bytes,4,rep,name=Options,proto3" json:"Options,omitempty"`
 	Creator              int64    `protobuf:"varint,5,opt,name=Creator,proto3" json:"Creator,omitempty"`
+	CommunityID          int64    `protobuf:"varint,6,opt,name=CommunityID,proto3" json:"CommunityID,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -92,8 +93,16 @@ func (m *NewProposalReq) GetCreator() int64 {
 	return 0
 }
 
+func (m *NewProposalReq) GetCommunityID() int64 {
+	if m != nil {
+		return m.CommunityID
+	}
+	return 0
+}
+
 type NewProposalResp struct {
 	BaseResp             *idl.Resp `protobuf:"bytes,1,opt,name=BaseResp,proto3" json:"BaseResp,omitempty"`
+	ProposalID           int64     `protobuf:"varint,2,opt,name=ProposalID,proto3" json:"ProposalID,omitempty"`
 	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
 	XXX_unrecognized     []byte    `json:"-"`
 	XXX_sizecache        int32     `json:"-"`
@@ -131,8 +140,149 @@ func (m *NewProposalResp) GetBaseResp() *idl.Resp {
 	return nil
 }
 
+func (m *NewProposalResp) GetProposalID() int64 {
+	if m != nil {
+		return m.ProposalID
+	}
+	return 0
+}
+
+type GetProposalInfoReq struct {
+	ProposalID           int64    `protobuf:"varint,1,opt,name=ProposalID,proto3" json:"ProposalID,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetProposalInfoReq) Reset()         { *m = GetProposalInfoReq{} }
+func (m *GetProposalInfoReq) String() string { return proto.CompactTextString(m) }
+func (*GetProposalInfoReq) ProtoMessage()    {}
+func (*GetProposalInfoReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c3ac5ce23bf32d05, []int{2}
+}
+
+func (m *GetProposalInfoReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetProposalInfoReq.Unmarshal(m, b)
+}
+func (m *GetProposalInfoReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetProposalInfoReq.Marshal(b, m, deterministic)
+}
+func (m *GetProposalInfoReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetProposalInfoReq.Merge(m, src)
+}
+func (m *GetProposalInfoReq) XXX_Size() int {
+	return xxx_messageInfo_GetProposalInfoReq.Size(m)
+}
+func (m *GetProposalInfoReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetProposalInfoReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetProposalInfoReq proto.InternalMessageInfo
+
+func (m *GetProposalInfoReq) GetProposalID() int64 {
+	if m != nil {
+		return m.ProposalID
+	}
+	return 0
+}
+
+type GetProposalInfoResp struct {
+	BaseResp             *idl.Resp `protobuf:"bytes,1,opt,name=BaseResp,proto3" json:"BaseResp,omitempty"`
+	ProposalID           int64     `protobuf:"varint,2,opt,name=ProposalID,proto3" json:"ProposalID,omitempty"`
+	Title                string    `protobuf:"bytes,3,opt,name=Title,proto3" json:"Title,omitempty"`
+	Content              string    `protobuf:"bytes,4,opt,name=Content,proto3" json:"Content,omitempty"`
+	VoteInfo             []byte    `protobuf:"bytes,5,opt,name=VoteInfo,proto3" json:"VoteInfo,omitempty"`
+	Creator              int64     `protobuf:"varint,6,opt,name=Creator,proto3" json:"Creator,omitempty"`
+	CreatedAt            int64     `protobuf:"varint,7,opt,name=CreatedAt,proto3" json:"CreatedAt,omitempty"`
+	UpdatedAt            int64     `protobuf:"varint,8,opt,name=UpdatedAt,proto3" json:"UpdatedAt,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
+}
+
+func (m *GetProposalInfoResp) Reset()         { *m = GetProposalInfoResp{} }
+func (m *GetProposalInfoResp) String() string { return proto.CompactTextString(m) }
+func (*GetProposalInfoResp) ProtoMessage()    {}
+func (*GetProposalInfoResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c3ac5ce23bf32d05, []int{3}
+}
+
+func (m *GetProposalInfoResp) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetProposalInfoResp.Unmarshal(m, b)
+}
+func (m *GetProposalInfoResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetProposalInfoResp.Marshal(b, m, deterministic)
+}
+func (m *GetProposalInfoResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetProposalInfoResp.Merge(m, src)
+}
+func (m *GetProposalInfoResp) XXX_Size() int {
+	return xxx_messageInfo_GetProposalInfoResp.Size(m)
+}
+func (m *GetProposalInfoResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetProposalInfoResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetProposalInfoResp proto.InternalMessageInfo
+
+func (m *GetProposalInfoResp) GetBaseResp() *idl.Resp {
+	if m != nil {
+		return m.BaseResp
+	}
+	return nil
+}
+
+func (m *GetProposalInfoResp) GetProposalID() int64 {
+	if m != nil {
+		return m.ProposalID
+	}
+	return 0
+}
+
+func (m *GetProposalInfoResp) GetTitle() string {
+	if m != nil {
+		return m.Title
+	}
+	return ""
+}
+
+func (m *GetProposalInfoResp) GetContent() string {
+	if m != nil {
+		return m.Content
+	}
+	return ""
+}
+
+func (m *GetProposalInfoResp) GetVoteInfo() []byte {
+	if m != nil {
+		return m.VoteInfo
+	}
+	return nil
+}
+
+func (m *GetProposalInfoResp) GetCreator() int64 {
+	if m != nil {
+		return m.Creator
+	}
+	return 0
+}
+
+func (m *GetProposalInfoResp) GetCreatedAt() int64 {
+	if m != nil {
+		return m.CreatedAt
+	}
+	return 0
+}
+
+func (m *GetProposalInfoResp) GetUpdatedAt() int64 {
+	if m != nil {
+		return m.UpdatedAt
+	}
+	return 0
+}
+
 type ModifyProposalReq struct {
-	ProposalID           string   `protobuf:"bytes,1,opt,name=ProposalID,proto3" json:"ProposalID,omitempty"`
+	ProposalID           int64    `protobuf:"varint,1,opt,name=ProposalID,proto3" json:"ProposalID,omitempty"`
 	Title                string   `protobuf:"bytes,2,opt,name=Title,proto3" json:"Title,omitempty"`
 	Content              string   `protobuf:"bytes,3,opt,name=Content,proto3" json:"Content,omitempty"`
 	Imgs                 []string `protobuf:"bytes,4,rep,name=Imgs,proto3" json:"Imgs,omitempty"`
@@ -145,7 +295,7 @@ func (m *ModifyProposalReq) Reset()         { *m = ModifyProposalReq{} }
 func (m *ModifyProposalReq) String() string { return proto.CompactTextString(m) }
 func (*ModifyProposalReq) ProtoMessage()    {}
 func (*ModifyProposalReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c3ac5ce23bf32d05, []int{2}
+	return fileDescriptor_c3ac5ce23bf32d05, []int{4}
 }
 
 func (m *ModifyProposalReq) XXX_Unmarshal(b []byte) error {
@@ -166,11 +316,11 @@ func (m *ModifyProposalReq) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_ModifyProposalReq proto.InternalMessageInfo
 
-func (m *ModifyProposalReq) GetProposalID() string {
+func (m *ModifyProposalReq) GetProposalID() int64 {
 	if m != nil {
 		return m.ProposalID
 	}
-	return ""
+	return 0
 }
 
 func (m *ModifyProposalReq) GetTitle() string {
@@ -205,7 +355,7 @@ func (m *ModifyProposalResp) Reset()         { *m = ModifyProposalResp{} }
 func (m *ModifyProposalResp) String() string { return proto.CompactTextString(m) }
 func (*ModifyProposalResp) ProtoMessage()    {}
 func (*ModifyProposalResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c3ac5ce23bf32d05, []int{3}
+	return fileDescriptor_c3ac5ce23bf32d05, []int{5}
 }
 
 func (m *ModifyProposalResp) XXX_Unmarshal(b []byte) error {
@@ -233,6 +383,76 @@ func (m *ModifyProposalResp) GetBaseResp() *idl.Resp {
 	return nil
 }
 
+type GetCommentsReq struct {
+	ProposalID           int64    `protobuf:"varint,1,opt,name=ProposalID,proto3" json:"ProposalID,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetCommentsReq) Reset()         { *m = GetCommentsReq{} }
+func (m *GetCommentsReq) String() string { return proto.CompactTextString(m) }
+func (*GetCommentsReq) ProtoMessage()    {}
+func (*GetCommentsReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c3ac5ce23bf32d05, []int{6}
+}
+
+func (m *GetCommentsReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetCommentsReq.Unmarshal(m, b)
+}
+func (m *GetCommentsReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetCommentsReq.Marshal(b, m, deterministic)
+}
+func (m *GetCommentsReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetCommentsReq.Merge(m, src)
+}
+func (m *GetCommentsReq) XXX_Size() int {
+	return xxx_messageInfo_GetCommentsReq.Size(m)
+}
+func (m *GetCommentsReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetCommentsReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetCommentsReq proto.InternalMessageInfo
+
+func (m *GetCommentsReq) GetProposalID() int64 {
+	if m != nil {
+		return m.ProposalID
+	}
+	return 0
+}
+
+type GetCommentsResp struct {
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetCommentsResp) Reset()         { *m = GetCommentsResp{} }
+func (m *GetCommentsResp) String() string { return proto.CompactTextString(m) }
+func (*GetCommentsResp) ProtoMessage()    {}
+func (*GetCommentsResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c3ac5ce23bf32d05, []int{7}
+}
+
+func (m *GetCommentsResp) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetCommentsResp.Unmarshal(m, b)
+}
+func (m *GetCommentsResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetCommentsResp.Marshal(b, m, deterministic)
+}
+func (m *GetCommentsResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetCommentsResp.Merge(m, src)
+}
+func (m *GetCommentsResp) XXX_Size() int {
+	return xxx_messageInfo_GetCommentsResp.Size(m)
+}
+func (m *GetCommentsResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetCommentsResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetCommentsResp proto.InternalMessageInfo
+
 type CommentProposalReq struct {
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -243,7 +463,7 @@ func (m *CommentProposalReq) Reset()         { *m = CommentProposalReq{} }
 func (m *CommentProposalReq) String() string { return proto.CompactTextString(m) }
 func (*CommentProposalReq) ProtoMessage()    {}
 func (*CommentProposalReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c3ac5ce23bf32d05, []int{4}
+	return fileDescriptor_c3ac5ce23bf32d05, []int{8}
 }
 
 func (m *CommentProposalReq) XXX_Unmarshal(b []byte) error {
@@ -275,7 +495,7 @@ func (m *CommentProposalResp) Reset()         { *m = CommentProposalResp{} }
 func (m *CommentProposalResp) String() string { return proto.CompactTextString(m) }
 func (*CommentProposalResp) ProtoMessage()    {}
 func (*CommentProposalResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c3ac5ce23bf32d05, []int{5}
+	return fileDescriptor_c3ac5ce23bf32d05, []int{9}
 }
 
 func (m *CommentProposalResp) XXX_Unmarshal(b []byte) error {
@@ -304,6 +524,9 @@ func (m *CommentProposalResp) GetBaseResp() *idl.Resp {
 }
 
 type VoteProposalReq struct {
+	ProposalID           int64    `protobuf:"varint,1,opt,name=ProposalID,proto3" json:"ProposalID,omitempty"`
+	Voter                int64    `protobuf:"varint,2,opt,name=voter,proto3" json:"voter,omitempty"`
+	Option               string   `protobuf:"bytes,3,opt,name=option,proto3" json:"option,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
@@ -313,7 +536,7 @@ func (m *VoteProposalReq) Reset()         { *m = VoteProposalReq{} }
 func (m *VoteProposalReq) String() string { return proto.CompactTextString(m) }
 func (*VoteProposalReq) ProtoMessage()    {}
 func (*VoteProposalReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c3ac5ce23bf32d05, []int{6}
+	return fileDescriptor_c3ac5ce23bf32d05, []int{10}
 }
 
 func (m *VoteProposalReq) XXX_Unmarshal(b []byte) error {
@@ -334,17 +557,39 @@ func (m *VoteProposalReq) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_VoteProposalReq proto.InternalMessageInfo
 
+func (m *VoteProposalReq) GetProposalID() int64 {
+	if m != nil {
+		return m.ProposalID
+	}
+	return 0
+}
+
+func (m *VoteProposalReq) GetVoter() int64 {
+	if m != nil {
+		return m.Voter
+	}
+	return 0
+}
+
+func (m *VoteProposalReq) GetOption() string {
+	if m != nil {
+		return m.Option
+	}
+	return ""
+}
+
 type VoteProposalResp struct {
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
+	BaseResp             *idl.Resp `protobuf:"bytes,1,opt,name=BaseResp,proto3" json:"BaseResp,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}  `json:"-"`
+	XXX_unrecognized     []byte    `json:"-"`
+	XXX_sizecache        int32     `json:"-"`
 }
 
 func (m *VoteProposalResp) Reset()         { *m = VoteProposalResp{} }
 func (m *VoteProposalResp) String() string { return proto.CompactTextString(m) }
 func (*VoteProposalResp) ProtoMessage()    {}
 func (*VoteProposalResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_c3ac5ce23bf32d05, []int{7}
+	return fileDescriptor_c3ac5ce23bf32d05, []int{11}
 }
 
 func (m *VoteProposalResp) XXX_Unmarshal(b []byte) error {
@@ -365,42 +610,221 @@ func (m *VoteProposalResp) XXX_DiscardUnknown() {
 
 var xxx_messageInfo_VoteProposalResp proto.InternalMessageInfo
 
+func (m *VoteProposalResp) GetBaseResp() *idl.Resp {
+	if m != nil {
+		return m.BaseResp
+	}
+	return nil
+}
+
+type GetProposalListReq struct {
+	State                int32    `protobuf:"varint,1,opt,name=State,proto3" json:"State,omitempty"`
+	Page                 int32    `protobuf:"varint,2,opt,name=Page,proto3" json:"Page,omitempty"`
+	CommunityID          int64    `protobuf:"varint,3,opt,name=CommunityID,proto3" json:"CommunityID,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *GetProposalListReq) Reset()         { *m = GetProposalListReq{} }
+func (m *GetProposalListReq) String() string { return proto.CompactTextString(m) }
+func (*GetProposalListReq) ProtoMessage()    {}
+func (*GetProposalListReq) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c3ac5ce23bf32d05, []int{12}
+}
+
+func (m *GetProposalListReq) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetProposalListReq.Unmarshal(m, b)
+}
+func (m *GetProposalListReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetProposalListReq.Marshal(b, m, deterministic)
+}
+func (m *GetProposalListReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetProposalListReq.Merge(m, src)
+}
+func (m *GetProposalListReq) XXX_Size() int {
+	return xxx_messageInfo_GetProposalListReq.Size(m)
+}
+func (m *GetProposalListReq) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetProposalListReq.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetProposalListReq proto.InternalMessageInfo
+
+func (m *GetProposalListReq) GetState() int32 {
+	if m != nil {
+		return m.State
+	}
+	return 0
+}
+
+func (m *GetProposalListReq) GetPage() int32 {
+	if m != nil {
+		return m.Page
+	}
+	return 0
+}
+
+func (m *GetProposalListReq) GetCommunityID() int64 {
+	if m != nil {
+		return m.CommunityID
+	}
+	return 0
+}
+
+type ProposalInfo struct {
+	ID                   int64    `protobuf:"varint,1,opt,name=ID,proto3" json:"ID,omitempty"`
+	Title                string   `protobuf:"bytes,2,opt,name=Title,proto3" json:"Title,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *ProposalInfo) Reset()         { *m = ProposalInfo{} }
+func (m *ProposalInfo) String() string { return proto.CompactTextString(m) }
+func (*ProposalInfo) ProtoMessage()    {}
+func (*ProposalInfo) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c3ac5ce23bf32d05, []int{13}
+}
+
+func (m *ProposalInfo) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_ProposalInfo.Unmarshal(m, b)
+}
+func (m *ProposalInfo) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_ProposalInfo.Marshal(b, m, deterministic)
+}
+func (m *ProposalInfo) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ProposalInfo.Merge(m, src)
+}
+func (m *ProposalInfo) XXX_Size() int {
+	return xxx_messageInfo_ProposalInfo.Size(m)
+}
+func (m *ProposalInfo) XXX_DiscardUnknown() {
+	xxx_messageInfo_ProposalInfo.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_ProposalInfo proto.InternalMessageInfo
+
+func (m *ProposalInfo) GetID() int64 {
+	if m != nil {
+		return m.ID
+	}
+	return 0
+}
+
+func (m *ProposalInfo) GetTitle() string {
+	if m != nil {
+		return m.Title
+	}
+	return ""
+}
+
+type GetProposalListResp struct {
+	BaseResp             *idl.Resp       `protobuf:"bytes,1,opt,name=BaseResp,proto3" json:"BaseResp,omitempty"`
+	Proposals            []*ProposalInfo `protobuf:"bytes,2,rep,name=Proposals,proto3" json:"Proposals,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}        `json:"-"`
+	XXX_unrecognized     []byte          `json:"-"`
+	XXX_sizecache        int32           `json:"-"`
+}
+
+func (m *GetProposalListResp) Reset()         { *m = GetProposalListResp{} }
+func (m *GetProposalListResp) String() string { return proto.CompactTextString(m) }
+func (*GetProposalListResp) ProtoMessage()    {}
+func (*GetProposalListResp) Descriptor() ([]byte, []int) {
+	return fileDescriptor_c3ac5ce23bf32d05, []int{14}
+}
+
+func (m *GetProposalListResp) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_GetProposalListResp.Unmarshal(m, b)
+}
+func (m *GetProposalListResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_GetProposalListResp.Marshal(b, m, deterministic)
+}
+func (m *GetProposalListResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_GetProposalListResp.Merge(m, src)
+}
+func (m *GetProposalListResp) XXX_Size() int {
+	return xxx_messageInfo_GetProposalListResp.Size(m)
+}
+func (m *GetProposalListResp) XXX_DiscardUnknown() {
+	xxx_messageInfo_GetProposalListResp.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_GetProposalListResp proto.InternalMessageInfo
+
+func (m *GetProposalListResp) GetBaseResp() *idl.Resp {
+	if m != nil {
+		return m.BaseResp
+	}
+	return nil
+}
+
+func (m *GetProposalListResp) GetProposals() []*ProposalInfo {
+	if m != nil {
+		return m.Proposals
+	}
+	return nil
+}
+
 func init() {
 	proto.RegisterType((*NewProposalReq)(nil), "dayan.community.srv.proposal.NewProposalReq")
 	proto.RegisterType((*NewProposalResp)(nil), "dayan.community.srv.proposal.NewProposalResp")
+	proto.RegisterType((*GetProposalInfoReq)(nil), "dayan.community.srv.proposal.GetProposalInfoReq")
+	proto.RegisterType((*GetProposalInfoResp)(nil), "dayan.community.srv.proposal.GetProposalInfoResp")
 	proto.RegisterType((*ModifyProposalReq)(nil), "dayan.community.srv.proposal.ModifyProposalReq")
 	proto.RegisterType((*ModifyProposalResp)(nil), "dayan.community.srv.proposal.ModifyProposalResp")
+	proto.RegisterType((*GetCommentsReq)(nil), "dayan.community.srv.proposal.GetCommentsReq")
+	proto.RegisterType((*GetCommentsResp)(nil), "dayan.community.srv.proposal.GetCommentsResp")
 	proto.RegisterType((*CommentProposalReq)(nil), "dayan.community.srv.proposal.CommentProposalReq")
 	proto.RegisterType((*CommentProposalResp)(nil), "dayan.community.srv.proposal.CommentProposalResp")
 	proto.RegisterType((*VoteProposalReq)(nil), "dayan.community.srv.proposal.VoteProposalReq")
 	proto.RegisterType((*VoteProposalResp)(nil), "dayan.community.srv.proposal.VoteProposalResp")
+	proto.RegisterType((*GetProposalListReq)(nil), "dayan.community.srv.proposal.GetProposalListReq")
+	proto.RegisterType((*ProposalInfo)(nil), "dayan.community.srv.proposal.ProposalInfo")
+	proto.RegisterType((*GetProposalListResp)(nil), "dayan.community.srv.proposal.GetProposalListResp")
 }
 
 func init() { proto.RegisterFile("proposal.proto", fileDescriptor_c3ac5ce23bf32d05) }
 
 var fileDescriptor_c3ac5ce23bf32d05 = []byte{
-	// 359 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x94, 0x53, 0x4f, 0x4f, 0xfa, 0x40,
-	0x14, 0x4c, 0x29, 0xfc, 0x7e, 0xf0, 0x30, 0x20, 0x4f, 0x0e, 0x4d, 0x63, 0x0c, 0xe9, 0xc1, 0x70,
-	0xd0, 0x55, 0xf1, 0x64, 0xa2, 0x17, 0xf1, 0xc2, 0xc1, 0x3f, 0x69, 0x8c, 0xf7, 0x22, 0xab, 0xa9,
-	0xa1, 0xdd, 0xb5, 0x6f, 0x85, 0xf0, 0x0d, 0xfc, 0x7c, 0x7e, 0x22, 0xc3, 0x42, 0xa5, 0xa5, 0x0a,
-	0xd9, 0xdb, 0xbe, 0xd9, 0xd9, 0xe9, 0xcc, 0xec, 0x16, 0x1a, 0x32, 0x11, 0x52, 0x50, 0x30, 0x66,
-	0x32, 0x11, 0x4a, 0xe0, 0xfe, 0x28, 0x98, 0x05, 0x31, 0x7b, 0x16, 0x51, 0xf4, 0x11, 0x87, 0x6a,
-	0xc6, 0x28, 0x99, 0xb0, 0x94, 0xe3, 0xc2, 0x30, 0x20, 0xbe, 0x60, 0x7a, 0x9f, 0x16, 0x34, 0xee,
-	0xf8, 0xf4, 0x61, 0xb9, 0xe7, 0xf3, 0x77, 0x6c, 0x43, 0xe5, 0x31, 0x54, 0x63, 0xee, 0x58, 0x1d,
-	0xab, 0x5b, 0xf3, 0x17, 0x03, 0x3a, 0xf0, 0xbf, 0x2f, 0x62, 0xc5, 0x63, 0xe5, 0x94, 0x34, 0x9e,
-	0x8e, 0x88, 0x50, 0x1e, 0x44, 0xaf, 0xe4, 0xd8, 0x1d, 0xbb, 0x5b, 0xf3, 0xf5, 0x7a, 0xce, 0xbe,
-	0x97, 0x2a, 0x14, 0x31, 0x39, 0x65, 0x0d, 0xa7, 0xa3, 0xd6, 0x49, 0x78, 0xa0, 0x44, 0xe2, 0x54,
-	0x3a, 0x56, 0xd7, 0xf6, 0xd3, 0xd1, 0xbb, 0x80, 0x66, 0xce, 0x09, 0x49, 0x3c, 0x84, 0xea, 0x75,
-	0x40, 0x7c, 0xbe, 0xd6, 0x6e, 0xea, 0x3d, 0x60, 0xda, 0xfc, 0x1c, 0xf1, 0x7f, 0xf6, 0xbc, 0x29,
-	0xb4, 0x6e, 0xc5, 0x28, 0x7c, 0x99, 0x65, 0x73, 0x1c, 0x00, 0xa4, 0xe3, 0xe0, 0x66, 0x19, 0x26,
-	0x83, 0xac, 0x72, 0x96, 0xfe, 0xc8, 0x69, 0xff, 0x9e, 0xb3, 0xbc, 0xca, 0xe9, 0x5d, 0x02, 0xae,
-	0x7f, 0xd8, 0xc0, 0x76, 0x1b, 0xb0, 0x2f, 0xa2, 0x88, 0xc7, 0x2a, 0xe3, 0xdb, 0xbb, 0x82, 0xbd,
-	0x02, 0x6a, 0x20, 0xda, 0x82, 0xe6, 0x93, 0x50, 0x3c, 0xab, 0x88, 0xb0, 0x9b, 0x87, 0x48, 0xf6,
-	0xbe, 0x6c, 0xa8, 0xa6, 0x00, 0xbe, 0x41, 0x3d, 0x53, 0x3d, 0x1e, 0xb1, 0x4d, 0xef, 0x87, 0xe5,
-	0xdf, 0x8b, 0x7b, 0x6c, 0xc0, 0x26, 0x89, 0x04, 0x8d, 0x7c, 0x65, 0x78, 0xb2, 0x59, 0xa0, 0x70,
-	0xb3, 0xee, 0xa9, 0xd9, 0x01, 0x92, 0x38, 0x81, 0xe6, 0x5a, 0xa7, 0xb8, 0x45, 0xa4, 0x78, 0x31,
-	0xee, 0x99, 0xe1, 0x09, 0x92, 0x18, 0xc1, 0x4e, 0xb6, 0x79, 0xdc, 0xd2, 0xd5, 0xda, 0xc5, 0xb9,
-	0xcc, 0x84, 0x4e, 0x72, 0xf8, 0x4f, 0xff, 0xd4, 0xe7, 0xdf, 0x01, 0x00, 0x00, 0xff, 0xff, 0x93,
-	0x61, 0xec, 0x6a, 0x10, 0x04, 0x00, 0x00,
+	// 613 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x56, 0xcd, 0x6e, 0xd3, 0x40,
+	0x10, 0x96, 0xe3, 0x24, 0x4d, 0x26, 0x51, 0x42, 0xb7, 0x15, 0xb2, 0xac, 0x0a, 0x45, 0x7b, 0x40,
+	0x11, 0x02, 0x13, 0x42, 0x4f, 0x08, 0x0e, 0xd0, 0x4a, 0x25, 0x12, 0x3f, 0x95, 0xf9, 0x91, 0x38,
+	0x81, 0x4b, 0xb6, 0x55, 0x50, 0xe3, 0x5d, 0xbc, 0x4b, 0xaa, 0x3c, 0x01, 0xef, 0xc2, 0x81, 0x57,
+	0x04, 0xed, 0xfa, 0x77, 0xed, 0x26, 0xee, 0x4a, 0xbd, 0xed, 0xcc, 0xec, 0xac, 0x67, 0xbe, 0x99,
+	0xef, 0x93, 0x61, 0xc0, 0x22, 0xca, 0x28, 0x0f, 0x2e, 0x3d, 0x16, 0x51, 0x41, 0xd1, 0xc1, 0x3c,
+	0x58, 0x07, 0xa1, 0xf7, 0x9d, 0x2e, 0x97, 0xbf, 0xc2, 0x85, 0x58, 0x7b, 0x3c, 0x5a, 0x79, 0xe9,
+	0x1d, 0x17, 0xce, 0x02, 0x4e, 0xe2, 0x9b, 0xf8, 0x8f, 0x05, 0x83, 0x77, 0xe4, 0xea, 0x34, 0x89,
+	0xf9, 0xe4, 0x27, 0xda, 0x87, 0xd6, 0xc7, 0x85, 0xb8, 0x24, 0x8e, 0x35, 0xb2, 0xc6, 0x5d, 0x3f,
+	0x36, 0x90, 0x03, 0x3b, 0x47, 0x34, 0x14, 0x24, 0x14, 0x4e, 0x43, 0xf9, 0x53, 0x13, 0x21, 0x68,
+	0xce, 0x96, 0x17, 0xdc, 0xb1, 0x47, 0xf6, 0xb8, 0xeb, 0xab, 0xb3, 0xbc, 0xfd, 0x9e, 0x89, 0x05,
+	0x0d, 0xb9, 0xd3, 0x54, 0xee, 0xd4, 0x54, 0xef, 0x44, 0x24, 0x10, 0x34, 0x72, 0x5a, 0x23, 0x6b,
+	0x6c, 0xfb, 0xa9, 0x89, 0x46, 0xd0, 0x3b, 0x4a, 0x0b, 0x9e, 0x1d, 0x3b, 0x6d, 0x15, 0x2d, 0xba,
+	0xf0, 0x17, 0x18, 0x6a, 0xb5, 0x72, 0x86, 0xee, 0x43, 0xe7, 0x55, 0xc0, 0x89, 0x3c, 0xab, 0x7a,
+	0x7b, 0x53, 0xf0, 0x54, 0x7b, 0xd2, 0xe3, 0x67, 0x31, 0x74, 0x0f, 0x20, 0xcd, 0x9b, 0x1d, 0xab,
+	0x0e, 0x6c, 0xbf, 0xe0, 0xc1, 0x87, 0x80, 0x4e, 0x88, 0xc8, 0x1c, 0xe1, 0x39, 0x95, 0x50, 0xe8,
+	0x59, 0x56, 0x25, 0xeb, 0x9f, 0x05, 0x7b, 0x95, 0xb4, 0xdb, 0xab, 0x2a, 0x1f, 0x85, 0xbd, 0x61,
+	0x14, 0x4d, 0x7d, 0x14, 0x2e, 0x74, 0x3e, 0x53, 0x41, 0x64, 0x1d, 0x0a, 0xdd, 0xbe, 0x9f, 0xd9,
+	0x45, 0xe0, 0xdb, 0x3a, 0xf0, 0x07, 0xd0, 0x55, 0x47, 0x32, 0x7f, 0x29, 0x9c, 0x1d, 0x15, 0xcb,
+	0x1d, 0x32, 0xfa, 0x89, 0xcd, 0x93, 0x68, 0x27, 0x8e, 0x66, 0x0e, 0x7c, 0x05, 0xbb, 0x6f, 0xe9,
+	0x7c, 0x71, 0xbe, 0x2e, 0x6e, 0x50, 0x0d, 0x6c, 0x79, 0x5b, 0x8d, 0x0d, 0x6d, 0xd9, 0xd7, 0x6f,
+	0x58, 0x33, 0xdf, 0x30, 0xfc, 0x1c, 0x50, 0xf9, 0xc3, 0x37, 0x07, 0x1e, 0x4f, 0x60, 0x70, 0x42,
+	0x84, 0xdc, 0x2d, 0x12, 0x0a, 0x7e, 0x93, 0x51, 0xef, 0xc2, 0x50, 0xcb, 0xe0, 0x0c, 0xef, 0x03,
+	0x4a, 0xec, 0x42, 0xf3, 0xf8, 0x05, 0xec, 0x55, 0xbc, 0x06, 0x95, 0x7d, 0x85, 0xa1, 0x1c, 0x99,
+	0x21, 0x9c, 0x2b, 0x2a, 0x48, 0x94, 0x2c, 0x50, 0x6c, 0xa0, 0xbb, 0xd0, 0xa6, 0x8a, 0x73, 0x09,
+	0x9a, 0x89, 0x85, 0x9f, 0xc1, 0x1d, 0xfd, 0x03, 0x06, 0xc5, 0x7d, 0xd3, 0x58, 0xf2, 0x66, 0xc1,
+	0x45, 0x22, 0x18, 0x1f, 0x44, 0x20, 0x62, 0xc1, 0x68, 0xf9, 0xb1, 0x21, 0x87, 0x76, 0x1a, 0x5c,
+	0xc4, 0x33, 0x6e, 0xf9, 0xea, 0x5c, 0xa6, 0xb8, 0x5d, 0xa5, 0xf8, 0x21, 0xf4, 0x8b, 0x6c, 0x42,
+	0x03, 0x68, 0x64, 0x3d, 0x37, 0x36, 0xad, 0x0e, 0xfe, 0xad, 0xf3, 0x30, 0x2e, 0xcc, 0x80, 0x87,
+	0xaf, 0xa1, 0x9b, 0xe6, 0x72, 0xa7, 0x31, 0xb2, 0xc7, 0xbd, 0xe9, 0x03, 0x6f, 0x9b, 0x86, 0x7a,
+	0x1a, 0xe5, 0xf3, 0xe4, 0xe9, 0xdf, 0x36, 0x74, 0x52, 0x0b, 0xfd, 0x80, 0x5e, 0x41, 0xaf, 0xd0,
+	0xc3, 0xed, 0x4f, 0xea, 0x32, 0xec, 0x3e, 0x32, 0xb8, 0xcd, 0x19, 0x5a, 0xa9, 0xfd, 0xd4, 0xb0,
+	0x9b, 0x6c, 0x7f, 0xa1, 0xaa, 0x77, 0xee, 0x13, 0xc3, 0x0c, 0xce, 0x10, 0x87, 0x81, 0xce, 0x43,
+	0xf4, 0x78, 0xfb, 0x23, 0x15, 0xb9, 0x70, 0x27, 0x66, 0x09, 0x9c, 0x49, 0x60, 0x0b, 0x64, 0xac,
+	0x03, 0x56, 0x67, 0x7a, 0x1d, 0xb0, 0x25, 0x96, 0x4b, 0x60, 0x4b, 0x7c, 0xae, 0x03, 0xb6, 0x2a,
+	0x0a, 0x75, 0xc0, 0x5e, 0x27, 0x18, 0x4b, 0xe8, 0x17, 0x79, 0x8a, 0x6a, 0xca, 0x2e, 0x89, 0x86,
+	0xeb, 0x99, 0x5c, 0xaf, 0xec, 0x8f, 0x64, 0x90, 0xc1, 0xfe, 0x24, 0x4a, 0x60, 0xb0, 0x3f, 0x29,
+	0x45, 0xcf, 0xda, 0xea, 0x3f, 0xe4, 0xe9, 0xff, 0x00, 0x00, 0x00, 0xff, 0xff, 0x97, 0x1d, 0x08,
+	0x07, 0xc3, 0x08, 0x00, 0x00,
 }

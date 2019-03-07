@@ -10,12 +10,19 @@ It is generated from these files:
 It has these top-level messages:
 	NewProposalReq
 	NewProposalResp
+	GetProposalInfoReq
+	GetProposalInfoResp
 	ModifyProposalReq
 	ModifyProposalResp
+	GetCommentsReq
+	GetCommentsResp
 	CommentProposalReq
 	CommentProposalResp
 	VoteProposalReq
 	VoteProposalResp
+	GetProposalListReq
+	ProposalInfo
+	GetProposalListResp
 */
 package dayan_community_srv_proposal
 
@@ -51,12 +58,18 @@ var _ server.Option
 type ProposalService interface {
 	// 增加议案
 	NewProposal(ctx context.Context, in *NewProposalReq, opts ...client.CallOption) (*NewProposalResp, error)
+	// 获取议案详情
+	GetProposalInfo(ctx context.Context, in *GetProposalInfoReq, opts ...client.CallOption) (*GetProposalInfoResp, error)
 	// 修改议案
 	ModifyProposal(ctx context.Context, in *ModifyProposalReq, opts ...client.CallOption) (*ModifyProposalResp, error)
+	// 获取评论和点赞数
+	GetComments(ctx context.Context, in *GetCommentsReq, opts ...client.CallOption) (*GetCommentsResp, error)
 	// 评论议案
 	CommentProposal(ctx context.Context, in *CommentProposalReq, opts ...client.CallOption) (*CommentProposalResp, error)
 	// 议案投票
 	VoteProposal(ctx context.Context, in *VoteProposalReq, opts ...client.CallOption) (*VoteProposalResp, error)
+	// 获取议案列表
+	GetProposalList(ctx context.Context, in *GetProposalListReq, opts ...client.CallOption) (*GetProposalListResp, error)
 }
 
 type proposalService struct {
@@ -87,9 +100,29 @@ func (c *proposalService) NewProposal(ctx context.Context, in *NewProposalReq, o
 	return out, nil
 }
 
+func (c *proposalService) GetProposalInfo(ctx context.Context, in *GetProposalInfoReq, opts ...client.CallOption) (*GetProposalInfoResp, error) {
+	req := c.c.NewRequest(c.name, "Proposal.GetProposalInfo", in)
+	out := new(GetProposalInfoResp)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *proposalService) ModifyProposal(ctx context.Context, in *ModifyProposalReq, opts ...client.CallOption) (*ModifyProposalResp, error) {
 	req := c.c.NewRequest(c.name, "Proposal.ModifyProposal", in)
 	out := new(ModifyProposalResp)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *proposalService) GetComments(ctx context.Context, in *GetCommentsReq, opts ...client.CallOption) (*GetCommentsResp, error) {
+	req := c.c.NewRequest(c.name, "Proposal.GetComments", in)
+	out := new(GetCommentsResp)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -117,25 +150,44 @@ func (c *proposalService) VoteProposal(ctx context.Context, in *VoteProposalReq,
 	return out, nil
 }
 
+func (c *proposalService) GetProposalList(ctx context.Context, in *GetProposalListReq, opts ...client.CallOption) (*GetProposalListResp, error) {
+	req := c.c.NewRequest(c.name, "Proposal.GetProposalList", in)
+	out := new(GetProposalListResp)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for Proposal service
 
 type ProposalHandler interface {
 	// 增加议案
 	NewProposal(context.Context, *NewProposalReq, *NewProposalResp) error
+	// 获取议案详情
+	GetProposalInfo(context.Context, *GetProposalInfoReq, *GetProposalInfoResp) error
 	// 修改议案
 	ModifyProposal(context.Context, *ModifyProposalReq, *ModifyProposalResp) error
+	// 获取评论和点赞数
+	GetComments(context.Context, *GetCommentsReq, *GetCommentsResp) error
 	// 评论议案
 	CommentProposal(context.Context, *CommentProposalReq, *CommentProposalResp) error
 	// 议案投票
 	VoteProposal(context.Context, *VoteProposalReq, *VoteProposalResp) error
+	// 获取议案列表
+	GetProposalList(context.Context, *GetProposalListReq, *GetProposalListResp) error
 }
 
 func RegisterProposalHandler(s server.Server, hdlr ProposalHandler, opts ...server.HandlerOption) error {
 	type proposal interface {
 		NewProposal(ctx context.Context, in *NewProposalReq, out *NewProposalResp) error
+		GetProposalInfo(ctx context.Context, in *GetProposalInfoReq, out *GetProposalInfoResp) error
 		ModifyProposal(ctx context.Context, in *ModifyProposalReq, out *ModifyProposalResp) error
+		GetComments(ctx context.Context, in *GetCommentsReq, out *GetCommentsResp) error
 		CommentProposal(ctx context.Context, in *CommentProposalReq, out *CommentProposalResp) error
 		VoteProposal(ctx context.Context, in *VoteProposalReq, out *VoteProposalResp) error
+		GetProposalList(ctx context.Context, in *GetProposalListReq, out *GetProposalListResp) error
 	}
 	type Proposal struct {
 		proposal
@@ -152,8 +204,16 @@ func (h *proposalHandler) NewProposal(ctx context.Context, in *NewProposalReq, o
 	return h.ProposalHandler.NewProposal(ctx, in, out)
 }
 
+func (h *proposalHandler) GetProposalInfo(ctx context.Context, in *GetProposalInfoReq, out *GetProposalInfoResp) error {
+	return h.ProposalHandler.GetProposalInfo(ctx, in, out)
+}
+
 func (h *proposalHandler) ModifyProposal(ctx context.Context, in *ModifyProposalReq, out *ModifyProposalResp) error {
 	return h.ProposalHandler.ModifyProposal(ctx, in, out)
+}
+
+func (h *proposalHandler) GetComments(ctx context.Context, in *GetCommentsReq, out *GetCommentsResp) error {
+	return h.ProposalHandler.GetComments(ctx, in, out)
 }
 
 func (h *proposalHandler) CommentProposal(ctx context.Context, in *CommentProposalReq, out *CommentProposalResp) error {
@@ -162,4 +222,8 @@ func (h *proposalHandler) CommentProposal(ctx context.Context, in *CommentPropos
 
 func (h *proposalHandler) VoteProposal(ctx context.Context, in *VoteProposalReq, out *VoteProposalResp) error {
 	return h.ProposalHandler.VoteProposal(ctx, in, out)
+}
+
+func (h *proposalHandler) GetProposalList(ctx context.Context, in *GetProposalListReq, out *GetProposalListResp) error {
+	return h.ProposalHandler.GetProposalList(ctx, in, out)
 }
