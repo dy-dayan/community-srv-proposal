@@ -3,7 +3,7 @@ package handler
 import (
 	"context"
 	"github.com/dy-dayan/community-srv-proposal/dal/db"
-	"github.com/dy-gopkg/kit"
+	"github.com/dy-gopkg/kit/micro"
 	"github.com/sirupsen/logrus"
 	srv "github.com/dy-dayan/community-srv-proposal/idl/dayan/community/srv-proposal"
 	atomicid "github.com/dy-dayan/community-srv-proposal/idl/dayan/common/srv-atomicid"
@@ -28,7 +28,7 @@ func (h *Handler) NewProposal(ctx context.Context, req *srv.NewProposalReq, rsp 
 	}
 
 	// 请求获取一个proposal id
-	cl := atomicid.NewAtomicIDService("dayan.common.srv.atomicid", kit.Client())
+	cl := atomicid.NewAtomicIDService("dayan.common.srv.atomicid", micro.Client())
 	req1 := &atomicid.GetIDReq{Label: "dayan.community.srv.proposal.proposal_id"}
 	rsp1, err := cl.GetID(ctx, req1)
 	if err != nil {
