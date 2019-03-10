@@ -2,7 +2,7 @@ package db
 
 import (
 	"errors"
-	"github.com/dy-dayan/community-srv-proposal/util/config"
+	"github.com/dy-dayan/community-srv-proposal/util"
 	"github.com/sirupsen/logrus"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
@@ -20,12 +20,12 @@ func Mgo() *mgo.Session {
 
 func Init() {
 	dialInfo := &mgo.DialInfo{
-		Addrs:     uconfig.DefaultMgoConf.Addr,
+		Addrs:     util.DefaultMgoConf.Addr,
 		Direct:    false,
 		Timeout:   time.Second * 3,
-		PoolLimit: uconfig.DefaultMgoConf.PoolLimit,
-		Username:  uconfig.DefaultMgoConf.Username,
-		Password:  uconfig.DefaultMgoConf.Password,
+		PoolLimit: util.DefaultMgoConf.PoolLimit,
+		Username:  util.DefaultMgoConf.Username,
+		Password:  util.DefaultMgoConf.Password,
 	}
 
 	ses, err := mgo.DialWithInfo(dialInfo)
@@ -38,17 +38,17 @@ func Init() {
 }
 
 type Proposal struct {
-	ID        int64  `bson:"_id"`
-	CommunityID int64 `bson:"community_id"`
-	Title     string  `bson:"title"`
-	Content   string `bson:"content"`
-	Imgs      []string `bson:"imgs"`
-	Options   []string `bson:"options"`
-	Creator   int64 `bson:"creator"`
-	State     int32 `bson:"state"`
-	Result    string `bson:"result"`
-	CreatedAt int64  `bson:"created_at"`
-	UpdatedAt int64  `bson:"updated_at"`
+	ID          int64    `bson:"_id"`
+	CommunityID int64    `bson:"community_id"`
+	Title       string   `bson:"title"`
+	Content     string   `bson:"content"`
+	Imgs        []string `bson:"imgs"`
+	Options     []string `bson:"options"`
+	Creator     int64    `bson:"creator"`
+	State       int32    `bson:"state"`
+	Result      string   `bson:"result"`
+	CreatedAt   int64    `bson:"created_at"`
+	UpdatedAt   int64    `bson:"updated_at"`
 }
 
 var (
@@ -57,26 +57,26 @@ var (
 )
 
 const (
-	ProposalState_Unknown int32 = iota // 未知
-	ProposalState_Ediion  // 编辑中
-	ProposalState_Commited // 已提交，投票中
-	ProposalState_End // 结束
+	ProposalState_Unknown  int32 = iota // 未知
+	ProposalState_Ediion                // 编辑中
+	ProposalState_Commited              // 已提交，投票中
+	ProposalState_End                   // 结束
 )
 
 func InsertProposal(pid, cid int64, title, content string, creator int64, imgs, opts []string) error {
 	now := time.Now().Unix()
 	data := &Proposal{
-		ID: pid,
+		ID:          pid,
 		CommunityID: cid,
-		Title:     title,
-		Content:   content,
-		Imgs:      imgs,
-		Options:   opts,
-		Creator:   creator,
-		State:     ProposalState_Ediion,
-		Result:    "",
-		CreatedAt: now,
-		UpdatedAt: now,
+		Title:       title,
+		Content:     content,
+		Imgs:        imgs,
+		Options:     opts,
+		Creator:     creator,
+		State:       ProposalState_Ediion,
+		Result:      "",
+		CreatedAt:   now,
+		UpdatedAt:   now,
 	}
 
 	ses := defaultMgo.Copy()
@@ -88,11 +88,9 @@ func InsertProposal(pid, cid int64, title, content string, creator int64, imgs, 
 	return ses.DB(DBProposal).C(CProposal).Insert(data)
 }
 
-
-
 func GetProposal(id int64) (*Proposal, error) {
 	query := bson.M{
-		"_id":id,
+		"_id": id,
 	}
 	ses := defaultMgo.Copy()
 	if ses == nil {
@@ -109,10 +107,9 @@ func GetProposal(id int64) (*Proposal, error) {
 	return ret, err
 }
 
-
 func UpdateProposalTitleAndContent(id int64, title, content string) error {
 	query := bson.M{
-		"_id":id,
+		"_id": id,
 	}
 	ses := defaultMgo.Copy()
 	if ses == nil {
@@ -149,7 +146,7 @@ func GetProposalList(cid int64, state, page int32) ([]*Proposal, error) {
 	defer ses.Close()
 
 	limit := 30
-	skip := int(page)*(limit)
+	skip := int(page) * (limit)
 
 	query := bson.M{
 		"community_id": cid,

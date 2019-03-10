@@ -163,6 +163,8 @@ github.com/dy-gopkg/kit v0.0.0-20190305071224-09d7ea9cbb65 h1:mYnaI7jBlWBGt5GyaS
 github.com/dy-gopkg/kit v0.0.0-20190305071224-09d7ea9cbb65/go.mod h1:1QzwuqR33vXSMnR/UGi9cvFqa+/+KfxFXTKGjna5wmk=
 github.com/dy-gopkg/kit v0.0.0-20190308065601-5e4873830d77 h1:FZ3D1xPCP+LIe4V7Z+jcI/QVUEtkxmrwlkhy9Wry1Zw=
 github.com/dy-gopkg/kit v0.0.0-20190308065601-5e4873830d77/go.mod h1:6Ut8jENQf2shMtgB2O24BDqW+YISkOLLcWitZCc6sGo=
+github.com/dy-gopkg/kit v0.0.0-20190310102400-3a392b27176a h1:ws/dvsz2CavYR1lAg94D5IHKCSsvXchuaL4KOm35ntg=
+github.com/dy-gopkg/kit v0.0.0-20190310102400-3a392b27176a/go.mod h1:6Ut8jENQf2shMtgB2O24BDqW+YISkOLLcWitZCc6sGo=
 github.com/elazarl/go-bindata-assetfs v1.0.0 h1:G/bYguwHIzWq9ZoyUQqrjTmJbbYn3j3CKKpKinvZLFk=
 github.com/elazarl/go-bindata-assetfs v1.0.0/go.mod h1:v+YaWX3bdea5J/mo8dSETolEo7R71Vk1u8bnjau5yw4=
 github.com/emirpasic/gods v1.9.0/go.mod h1:YfzfFFoVP/catgzJb4IKIqXjX78Ha8FMSDh3ymbK86o=

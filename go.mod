@@ -1,7 +1,7 @@
 module github.com/dy-dayan/community-srv-proposal
 
 require (
-	github.com/dy-gopkg/kit v0.0.0-20190308065601-5e4873830d77
+	github.com/dy-gopkg/kit v0.0.0-20190310102400-3a392b27176a
 	github.com/golang/protobuf v1.3.0
 	github.com/micro/go-config v1.0.0
 	github.com/micro/go-micro v1.0.0
